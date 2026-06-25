@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use App\Models\user;
@@ -49,9 +48,10 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(users $users)
+    public function show($id)
     {
-        //
+        $users =user::findOrFail($id);
+        return $users;
     }
 
     /**
@@ -59,7 +59,7 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        $users = user::findOrFail($id);
+        $users =$this-> show($id);
         return view('edit', compact('users'));//user doit etre la variable que tu a mis dans edit.blade.php
     }
 
@@ -68,7 +68,7 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $users=user::findOrFail($id);
+        $users=$this->show($id);
         $users->update([
             'nom' => $request->nom,
             'prenom'=>$request->prenom,
@@ -84,7 +84,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-      $users= user::findOrFail($id);
+      $users= $this->show($id);
       $users->delete();
       return redirect('/')->with('success', "l'utilisateur suprimer avec succes");//->back() pour dire sur la meme page
     }

@@ -1,9 +1,8 @@
 <?php
 namespace App\Models;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
-class user extends Authenticatable
+class user extends Model
 {
     protected $fillable = [
         'nom',
@@ -13,9 +12,6 @@ class user extends Authenticatable
         'age',
         'role'
     ];
-     protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+
 }
 
